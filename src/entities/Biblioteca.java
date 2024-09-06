@@ -1,5 +1,7 @@
 package entities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import data.MinhaEstruturaDeDados;
@@ -18,10 +20,21 @@ public class Biblioteca {
         meuArrayList.adicionar(new Livro(nomeLivro, new Autor(nomeAutor), data));
     }
 
-    public void listarLivros(){
+    private Date formatarData(String data) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.parse(data);
+    }
+    public void adicionarLivro(String nomeLivro, String nomeAutor, String data) throws ParseException{
+        Date dataPublicacao = formatarData(data);
+        meuArrayList.adicionar(new Livro(nomeLivro, new Autor(nomeAutor), dataPublicacao));
+    }
+
+    public String listarLivros(){
+        StringBuilder lista = new StringBuilder("Livros cadastrados:\n");
         for(int i = 0; i < meuArrayList.quantidade(); i++){
-            System.out.println(meuArrayList.pegar(i));
+            lista.append(meuArrayList.pegar(i)).append("\n");
         }
+        return lista.toString();
     }
 
     public void ordenarLivros(Estrategias estrategias){
@@ -32,5 +45,14 @@ public class Biblioteca {
             meuArrayList = BubbleSort.bubbleSort(meuArrayList);
         }
 
+    }
+
+    public int buscarLivros(String titulo){
+        for(int i = 0; i < meuArrayList.quantidade(); i++){
+            if(meuArrayList.pegar(i).getTitulo().equals(titulo)){
+                return i;
+            }
+        }
+        return -1;
     }
 }
