@@ -6,15 +6,17 @@ public class Livro implements Comparable<Livro> {
     private String titulo;
     private Autor autor;
     private Date publicacao;
+    private Categoria categoria;
 
     public Livro(){
 
     }
 
-    public Livro(String titulo, Autor autor, Date publicacao){
+    public Livro(String titulo, Autor autor, Date publicacao, Categoria categoria){
         this.titulo = titulo;
         this.autor = autor;
         this.publicacao = publicacao;
+        this.categoria = categoria;
     }
 
     public Autor getAutor() {
@@ -26,6 +28,11 @@ public class Livro implements Comparable<Livro> {
     public String getTitulo() {
         return titulo;
     }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
     public void setAutor(Autor autor) {
         this.autor = autor;
     }
@@ -34,6 +41,10 @@ public class Livro implements Comparable<Livro> {
     }
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override

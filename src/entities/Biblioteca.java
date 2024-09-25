@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import data.Algoritmos.AlgoritmoGuloso;
+import data.MeuGrafo;
 import data.MinhaEstruturaDeDados;
 import data.Algoritmos.BubbleSort;
 import data.Algoritmos.Estrategias;
@@ -16,23 +18,31 @@ public class Biblioteca {
        this.meuArrayList = new MinhaEstruturaDeDados<>();
     }
 
-    public void adicionarLivro(String nomeLivro, String nomeAutor, Date data){
-        meuArrayList.adicionar(new Livro(nomeLivro, new Autor(nomeAutor), data));
+    public void adicionarLivro(String nomeLivro, String nomeAutor, Date data, Categoria categoria){
+        meuArrayList.adicionar(new Livro(nomeLivro, new Autor(nomeAutor), data,categoria));
     }
 
     private Date formatarData(String data) throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.parse(data);
     }
-    public void adicionarLivro(String nomeLivro, String nomeAutor, String data) throws ParseException{
+    public void adicionarLivro(String nomeLivro, String nomeAutor, String data, String categoria) throws ParseException{
         Date dataPublicacao = formatarData(data);
-        meuArrayList.adicionar(new Livro(nomeLivro, new Autor(nomeAutor), dataPublicacao));
+        meuArrayList.adicionar(new Livro(nomeLivro, new Autor(nomeAutor), dataPublicacao, new Categoria(categoria)));
     }
 
     public String listarLivros(){
         StringBuilder lista = new StringBuilder("Livros cadastrados:\n");
         for(int i = 0; i < meuArrayList.quantidade(); i++){
             lista.append(meuArrayList.pegar(i)).append("\n");
+        }
+        return lista.toString();
+    }
+
+    public String listarLivros(MinhaEstruturaDeDados<Livro> array){
+        StringBuilder lista = new StringBuilder("Livros cadastrados:\n");
+        for(int i = 0; i < array.quantidade(); i++){
+            lista.append(array.pegar(i)).append("\n");
         }
         return lista.toString();
     }
@@ -55,4 +65,15 @@ public class Biblioteca {
         }
         return -1;
     }
+
+    public MinhaEstruturaDeDados<Livro> recomendarLivros(MeuGrafo grafo, String titulo){
+        for(int i = 0; i < meuArrayList.quantidade(); i++){
+            if(meuArrayList.pegar(i).getTitulo().equals(titulo)){
+               return AlgoritmoGuloso.recomendarLivros(grafo, meuArrayList, meuArrayList.pegar(i));
+            }
+        }
+        return null;
+    }
+
+
 }
