@@ -49,7 +49,7 @@ public class Livro implements Comparable<Livro> {
 
     @Override
     public String toString() {
-        return "Livro [titulo=" + titulo + "]";
+        return titulo;
     }
 
     @Override

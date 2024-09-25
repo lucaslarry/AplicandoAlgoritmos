@@ -16,13 +16,15 @@ public class Application {
         Biblioteca biblioteca = new Biblioteca();
         MeuGrafo meuGrafo = new MeuGrafo();
         boolean sair = false;
+
+
         Categoria cat1 = new Categoria("Ficcão Cientifica");
         Categoria cat2 = new Categoria("Fantasia");
         Categoria cat3 = new Categoria("Misterio");
         Categoria cat4 = new Categoria("Romance");
         Categoria cat5 = new Categoria("Drama");
         Categoria cat6 = new Categoria("Medieval");
-
+        Categoria[] categorias = {cat1, cat2, cat3, cat4, cat5, cat6};
         meuGrafo.adicionarAresta(cat1, cat2);
         meuGrafo.adicionarAresta(cat2, cat6);
         meuGrafo.adicionarAresta(cat6, cat4);
@@ -34,16 +36,27 @@ public class Application {
 
 
 
-        biblioteca.adicionarLivro("It: A coisa", "Stephen King", new java.util.Date(),cat3);
-        biblioteca.adicionarLivro("Duna", "Frank Herbert", new java.util.Date(),cat1);
-        biblioteca.adicionarLivro("Harry Potter", "JK Rowling", new java.util.Date(),cat2);
-        biblioteca.adicionarLivro("Trono de Vidro", "Sarah J. Maas", new java.util.Date(), cat6);
-        biblioteca.adicionarLivro("Pequenas Mulheres", "Louisa May Alcott", new java.util.Date(),cat5);
-        biblioteca.adicionarLivro("Pessoas Normais", "Sally Rooney", new java.util.Date(), cat4);
+        biblioteca.adicionarLivro("Duna", "Frank Herbert", new java.util.Date(), cat1);
+        biblioteca.adicionarLivro("O Silmarillion", "J.R.R. Tolkien", new java.util.Date(), cat1);
+        biblioteca.adicionarLivro("1984", "George Orwell", new java.util.Date(), cat1);
+        biblioteca.adicionarLivro("A Guerra dos Tronos", "George R.R. Martin", new java.util.Date(), cat2);
+        biblioteca.adicionarLivro("Harry Potter e a Pedra Filosofal", "J.K. Rowling", new java.util.Date(), cat2);
+        biblioteca.adicionarLivro("O Senhor dos Anéis: A Sociedade do Anel", "J.R.R. Tolkien", new java.util.Date(), cat2);
+        biblioteca.adicionarLivro("O Senhor dos Anéis: As Duas Torres", "J.R.R. Tolkien", new java.util.Date(), cat2);
+        biblioteca.adicionarLivro("Jogos Vorazes", "Suzanne Collins", new java.util.Date(), cat2);
+        biblioteca.adicionarLivro("It: A Coisa", "Stephen King", new java.util.Date(), cat3);
         biblioteca.adicionarLivro("O Iluminado", "Stephen King", new java.util.Date(), cat3);
-        biblioteca.adicionarLivro("O Senhor dos Aneis 2", "Tolkien", new java.util.Date(),cat2);
-        biblioteca.adicionarLivro("O Senhor dos Aneis", "Tolkien", new java.util.Date(),cat2);
-        biblioteca.adicionarLivro("Jogos Vorazes", "Suzanne Collins", new java.util.Date(),cat2);
+        biblioteca.adicionarLivro("O Código Da Vinci", "Dan Brown", new java.util.Date(), cat3);
+        biblioteca.adicionarLivro("A Metamorfose", "Franz Kafka", new java.util.Date(), cat3);
+        biblioteca.adicionarLivro("Pessoas Normais", "Sally Rooney", new java.util.Date(), cat4);
+        biblioteca.adicionarLivro("Orgulho e Preconceito", "Jane Austen", new java.util.Date(), cat4);
+        biblioteca.adicionarLivro("Dom Casmurro", "Machado de Assis", new java.util.Date(), cat4);
+        biblioteca.adicionarLivro("Pequenas Mulheres", "Louisa May Alcott", new java.util.Date(), cat5);
+        biblioteca.adicionarLivro("Cem Anos de Solidão", "Gabriel García Márquez", new java.util.Date(), cat5);
+        biblioteca.adicionarLivro("A Menina que Roubava Livros", "Markus Zusak", new java.util.Date(), cat5);
+        biblioteca.adicionarLivro("Trono de Vidro", "Sarah J. Maas", new java.util.Date(), cat6);
+
+
 
         while(!sair){
             try {
@@ -67,9 +80,17 @@ public class Application {
                         if (autorStr == null) break;
                         String dataPublicacaoStr = JOptionPane.showInputDialog("Digite a data de publicação (ex: dd/MM/yyyy):");
                         if (dataPublicacaoStr == null) break;
-                        String categoriaStr = JOptionPane.showInputDialog("Digite sua categoria:");
-                        if (categoriaStr == null) break;
-                        biblioteca.adicionarLivro(titulo, autorStr, dataPublicacaoStr, categoriaStr);
+                        Categoria categoria = (Categoria) JOptionPane.showInputDialog(
+                                null,
+                                "Selecione uma categoria:",
+                                "Categorias",
+                                JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                categorias,
+                                categorias[0]
+                        );
+                        if (categoria == null) break;
+                        biblioteca.adicionarLivro(titulo, autorStr, dataPublicacaoStr, categoria);
                     }
                     case 1 ->{
                         JOptionPane.showMessageDialog(null, biblioteca.listarLivros());
@@ -117,9 +138,10 @@ public class Application {
             JOptionPane.showMessageDialog(null, "Data de publicação inválida. Use o formato dd/MM/yyyy.");
             } catch (BibliotecaException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        }
 
-                
+            }
+
+
         }
 
 
